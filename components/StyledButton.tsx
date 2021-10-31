@@ -1,10 +1,9 @@
 import { ReactNode } from "react";
 
-import Button from "@mui/material/Button";
-
 import { styled } from "@mui/material/styles";
+import Button, { ButtonProps as MuiButtonProps } from "@mui/material/Button";
 
-type Props = {
+type Props = MuiButtonProps & {
   children: ReactNode;
   icon?: ReactNode;
 };
@@ -18,13 +17,16 @@ const StyledEmotionButton = styled(Button)(({ theme }) => ({
   borderRadius: "4px 50px 50px 50px",
   textTransform: "none",
   height: "50px",
-  paddingLeft: "25px",
   "&:hover": {
     background: theme.palette.primary.main,
     boxShadow: `0 3px 11px ${theme.palette.primary.main}`,
   },
 }));
 
-export default function StyledButton({ children, icon }: Props) {
-  return <StyledEmotionButton endIcon={icon}>{children}</StyledEmotionButton>;
+export default function StyledButton({ children, icon, ...rest }: Props) {
+  return (
+    <StyledEmotionButton {...rest} endIcon={icon}>
+      {children}
+    </StyledEmotionButton>
+  );
 }
