@@ -21,6 +21,10 @@ const StyledEmotionButton = styled(Button)(({ theme }) => ({
     background: theme.palette.primary.main,
     boxShadow: `0 3px 11px ${theme.palette.primary.main}`,
   },
+  "&:disabled": {
+    color: "#fff",
+    background: "#B5B5B5",
+  },
 }));
 
 export default function StyledButton({ children, icon, ...rest }: Props) {
