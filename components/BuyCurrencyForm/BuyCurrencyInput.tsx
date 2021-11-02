@@ -1,9 +1,15 @@
-import { SyntheticEvent } from "react";
+import { ChangeEvent, SyntheticEvent } from "react";
 import { styled } from "@mui/material/styles";
-import InputAdornment from "@mui/material/InputAdornment";
-import { Divider, InputBase, Box } from "@mui/material";
+import {
+  Divider,
+  Box,
+  InputAdornment,
+  TextField,
+  Typography,
+} from "@mui/material";
 
 import BuyCurrencyAutocomplete from "./BuyCurrencyAutocomplete";
+
 import CurrencyImage from "../UI/CurrencyImage";
 
 const StyledInputWrapper = styled(Box)({
@@ -14,7 +20,7 @@ const StyledInputWrapper = styled(Box)({
   maxHeight: "48px",
 });
 
-const StyledInputField = styled(InputBase)({
+const StyledInputField = styled(TextField)({
   width: "70%",
   paddingLeft: "20px",
 });
@@ -27,48 +33,74 @@ const StyledDivider = styled(Divider)({
 
 type Props = {
   value: string;
-  id: string;
+  inputId: string;
+  name: string;
+  autocompleteId: string;
   startAdormentText: string;
   currency: string;
   currencies: Array<string>;
+  error: boolean | undefined;
+  helperText: string | false | undefined;
   handleChangeCurrency: (
     event: SyntheticEvent<Element, Event>,
     value: any
   ) => void;
+  handleChangeValue: (e: ChangeEvent<any>) => void;
 };
 
 export default function BuyCurrencyInput({
   value,
-  id,
+  inputId,
+  name,
+  autocompleteId,
   startAdormentText,
   currency,
   currencies,
+  error,
+  helperText,
   handleChangeCurrency,
+  handleChangeValue,
 }: Props) {
   return (
-    <StyledInputWrapper>
-      <StyledInputField
-        value={value}
-        inputProps={{ style: { textAlign: "center" } }}
-        startAdornment={
-          <InputAdornment position="start">{startAdormentText}</InputAdornment>
-        }
-      />
-      <Box
-        display="flex"
-        alignItems="center"
-        justifyContent="space-around"
-        width={"30%"}
-      >
-        <StyledDivider orientation="vertical" />
-        {currency && <CurrencyImage currency={currency} />}
-        <BuyCurrencyAutocomplete
-          id={id}
-          value={currency}
-          currencies={currencies}
-          handleChangeCurrency={handleChangeCurrency}
+    <>
+      <StyledInputWrapper>
+        <StyledInputField
+          id={inputId}
+          name={name}
+          value={value}
+          variant="standard"
+          onChange={handleChangeValue}
+          inputProps={{ style: { textAlign: "center" } }}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                {startAdormentText}
+              </InputAdornment>
+            ),
+            disableUnderline: true,
+          }}
         />
-      </Box>
-    </StyledInputWrapper>
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="space-around"
+          width={"30%"}
+        >
+          <StyledDivider orientation="vertical" />
+          {currency && <CurrencyImage currency={currency} />}
+          <BuyCurrencyAutocomplete
+            id={autocompleteId}
+            value={currency}
+            currencies={currencies}
+            handleChangeCurrency={handleChangeCurrency}
+          />
+        </Box>
+      </StyledInputWrapper>
+      {error && (
+        <Typography ml="5px" mt="-17px" variant="body2" color="error.main">
+          {helperText}
+        </Typography>
+      )}
+    </>
   );
 }

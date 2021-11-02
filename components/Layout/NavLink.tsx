@@ -1,7 +1,6 @@
 import RouterLink from "next/link";
 
-import MenuItem from "@mui/material/MenuItem";
-import Link from "@mui/material/Link";
+import { MenuItem, Link } from "@mui/material";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 import StyledButton from "../UI/StyledButton";

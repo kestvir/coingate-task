@@ -1,21 +1,18 @@
 import { styled } from "@mui/material/styles";
+import { Grid } from "@mui/material";
 
-import IntroText from "../components/IntroText";
+import Cta from "../components/Cta";
 import BuyCurrencyForm from "../components/BuyCurrencyForm";
-
-const StyledWrapper = styled("div")({
-  maxWidth: "1510px",
-  margin: "0 auto",
-  display: "grid",
-  gridTemplateColumns: "2fr 1fr",
-  gap: "80px",
-});
+import CtaParagraph from "../components/Cta/CtaParagraph";
 
 const StyledSection = styled("section")({
   paddingTop: "250px",
   position: "relative",
   height: "1260px",
   overflow: "hidden",
+  "@media (max-width: 1199px)": {
+    paddingTop: "200px",
+  },
 });
 
 const StyledBackground = styled("div")({
@@ -28,6 +25,18 @@ const StyledBackground = styled("div")({
   background: "#5022ED",
   borderRadius: "53px",
   transform: "matrix(1, -0.04, -0.04, -1, 0, 0);",
+  "@media (max-width: 1199px)": {
+    left: "-39px",
+    top: "10px",
+    borderRadius: "0",
+  },
+});
+
+const StyledCtaParagraphGrid = styled(Grid)({
+  display: "none",
+  "@media (max-width: 1199px)": {
+    display: "block",
+  },
 });
 
 export default function Home() {
@@ -35,10 +44,17 @@ export default function Home() {
     <main>
       <StyledSection>
         <StyledBackground />
-        <StyledWrapper>
-          <IntroText />
-          <BuyCurrencyForm />
-        </StyledWrapper>
+        <Grid container mx="auto" maxWidth="80vw">
+          <Grid item lg={8} md={12}>
+            <Cta />
+          </Grid>
+          <Grid item lg={4} md={12} flexBasis="100%">
+            <BuyCurrencyForm />
+          </Grid>
+          <StyledCtaParagraphGrid item md={12}>
+            <CtaParagraph />
+          </StyledCtaParagraphGrid>
+        </Grid>
       </StyledSection>
     </main>
   );

@@ -8,6 +8,7 @@ import {
   PopperProps,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
+
 import CurrencyImage from "../UI/CurrencyImage";
 
 type Props = {

@@ -1,19 +1,13 @@
 import { useEffect, useState } from "react";
-
 import Image from "next/image";
-
-import { styled } from "@mui/material/styles";
-import AppBar from "@mui/material/AppBar";
-import Drawer from "@mui/material/Drawer";
-import Toolbar from "@mui/material/Toolbar";
-import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
+import { styled } from "@mui/system";
+import { AppBar, Drawer, Toolbar, Box, IconButton, Link } from "@mui/material";
 
 import NavLink from "./NavLink";
 import HamburgerIcon from "./HamburgerIcon";
+import RouterLink from "next/link";
 
 const navigationLinksData = ["Products", "Resources", "Buy Instantly"];
-
 const authLinksData = ["Log In", "Sign up"];
 
 const StyledAppBar = styled(AppBar)({
@@ -53,7 +47,11 @@ export default function Header() {
   }, []);
 
   const brandLogo = (
-    <Image src="/logo.png" alt="brand logo" width="157" height="33" />
+    <RouterLink href="/">
+      <Link sx={{ cursor: "pointer" }}>
+        <Image src="/logo.png" alt="brand logo" width={157} height={33} />
+      </Link>
+    </RouterLink>
   );
 
   const displayDesktop = () => {
