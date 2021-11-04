@@ -68,9 +68,10 @@ export default function BuyCurrencyInput({
           id={inputId}
           name={name}
           value={value}
+          type="number"
           variant="standard"
           onChange={handleChangeValue}
-          inputProps={{ style: { textAlign: "center" } }}
+          inputProps={{ style: { textAlign: "center" }, min: 0 }}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">

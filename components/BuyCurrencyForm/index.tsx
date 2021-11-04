@@ -17,6 +17,8 @@ import BuyCurrencyPaymentMethodSelect from "./BuyCurrencyPaymentMethodSelect";
 
 import StyledButton from "../UI/StyledButton";
 
+import { CURRENCIES_URL, RATES_URL } from "../../constants";
+
 const StyledFormBackground = styled("div")({
   position: "absolute",
   top: "-50px",
@@ -27,6 +29,7 @@ const StyledFormBackground = styled("div")({
   borderRadius: "20px",
   transform: "rotate(-5.53deg)",
   minHeight: "28vw",
+  height: "100%",
   width: "20vw",
   zIndex: -1000,
   "@media (max-width: 1199px)": {
@@ -57,13 +60,10 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function BuyCurrencyForm() {
   const { data: currenciesData, error: currenciesError } = useSWR(
-    "https://api.codetabs.com/v1/proxy?quest=https://api.coingate.com/v2/currencies",
+    CURRENCIES_URL,
     fetcher
   );
-  const { data: ratesData, error: ratesError } = useSWR(
-    "https://api.codetabs.com/v1/proxy?quest=https://api.coingate.com/v2/rates",
-    fetcher
-  );
+  const { data: ratesData, error: ratesError } = useSWR(RATES_URL, fetcher);
 
   const router = useRouter();
 
@@ -142,12 +142,7 @@ export default function BuyCurrencyForm() {
   function handleCurrencyValueChange(event: ChangeEvent<any>) {
     const { name, value } = event.target;
 
-    if (isNaN(value)) return;
-    if (!value) {
-      formik.setFieldValue(name, 0);
-    } else {
-      formik.setFieldValue(name, value, true);
-    }
+    formik.setFieldValue(name, value, true);
 
     if (name === "pay") {
       const buyValue = calcBuyValue(value, buyCurrency, payCurrency);
@@ -184,7 +179,7 @@ export default function BuyCurrencyForm() {
     setPaymentMethod(event.target.value as string);
   }
 
-  if (currenciesData || !ratesData)
+  if (!currenciesData || !ratesData)
     return (
       <Box
         display="flex"
